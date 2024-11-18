@@ -1,3 +1,4 @@
+import { Button } from "./components/ui/button"
 
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
   return (
     <div>
       <h1>Hello</h1>
+      <Button/>
     </div>
   )
 }
