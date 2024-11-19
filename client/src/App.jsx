@@ -1,14 +1,13 @@
-import { Button } from "./components/ui/button"
+import Login from "./pages/Login"
 
 
 function App() {
   
 
   return (
-    <div>
-      <h1>Hello</h1>
-      <Button/>
-    </div>
+    <main>
+      <Login/>
+    </main>
   )
 }
 
