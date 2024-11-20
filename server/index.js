@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:8080",
+    origin: process.env.BACKEND_URL || "http://localhost:5173",
     credentials: true,
   })
 );
