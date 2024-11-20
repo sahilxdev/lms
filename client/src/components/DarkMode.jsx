@@ -2,8 +2,13 @@ import React from 'react'
 import { Button } from './ui/button'
 import { DropdownMenu, DropdownMenuTrigger,DropdownMenuContent, DropdownMenuItem } from './ui/dropdown-menu'
 import { Moon, Sun } from 'lucide-react'
+import { useTheme } from "@/components/ThemeProvider"
+
 
 const DarkMode = () => {
+    const { setTheme } = useTheme()
+
+
   return (
     <div>
         <DropdownMenu>

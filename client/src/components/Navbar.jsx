@@ -1,4 +1,4 @@
-import { School } from "lucide-react";
+import { LogOutIcon, MenuIcon, School } from "lucide-react";
 import React from "react";
 import {
   DropdownMenu,
@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
-  SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -20,6 +21,8 @@ import {
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import DarkMode from "./DarkMode";
+import { Separator } from "@radix-ui/react-dropdown-menu";
+import { Description } from "@radix-ui/react-dialog";
 
 const Navbar = () => {
   const user = true;
@@ -66,7 +69,10 @@ const Navbar = () => {
         </div>
       </div>
       {/* Mobile Devices */}
-      <MobileNavbar />
+      <div className="flex md:hidden items-center justify-between px-4 h-full">
+        <h1 className="font-extrabold text-2xl">E-learning</h1>
+        <MobileNavbar />
+      </div>
     </div>
   );
 };
@@ -74,17 +80,41 @@ const Navbar = () => {
 export default Navbar;
 
 const MobileNavbar = () => {
+  const role = "instructor";
   return (
     <Sheet>
-      <SheetTrigger>Open</SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Are you absolutely sure?</SheetTitle>
-          <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </SheetDescription>
+      <SheetTrigger asChild>
+        <Button
+          size="icon"
+          variant="outline"
+          className="rounded-full bg-gray-200 hover:bg-gray-300"
+        >
+          <MenuIcon />
+        </Button>
+      </SheetTrigger>
+      <SheetContent className="flex flex-col">
+        <SheetHeader className="flex flex-row items-center justify-between mt-2">
+          <SheetTitle>E-learning</SheetTitle>
+          <DarkMode />
         </SheetHeader>
+        <Description className="sr-only">
+          Use the navigation below to access different sections of the app.
+        </Description>
+        <Separator className="mr-2" />
+        <nav className="flex flex-col space-y-4">
+          <span>My Learning</span>
+          <span>Edit Profile</span>
+          <span className="flex justify-between">
+            <p>Log out</p> <LogOutIcon />{" "}
+          </span>
+        </nav>
+        {role === "instructor" && (
+          <SheetFooter>
+            <SheetClose asChild>
+              <Button type="submit">Dashboard</Button>
+            </SheetClose>
+          </SheetFooter>
+        )}
       </SheetContent>
     </Sheet>
   );
