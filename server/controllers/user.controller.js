@@ -134,7 +134,8 @@ export const updateProfile = async (req,res)=>{
     }
 
     const cloudResponse = await uploadMedia(profilePhoto.path);
-    const {secure_url:photoUrl} = cloudResponse.secure_url;
+
+    const photoUrl = cloudResponse.secure_url;
 
     const updatedData = {name, photoUrl}
     const updatedUser = await User.findByIdAndUpdate(userId, updatedData, {new:true})
