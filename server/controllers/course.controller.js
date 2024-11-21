@@ -1,4 +1,4 @@
-import { Course } from "../models/course.model";
+import { Course } from "../models/course.model.js";
 
 export const createCourse = async (req,res)=>{
     try {
@@ -16,6 +16,7 @@ export const createCourse = async (req,res)=>{
         })
 
         return res.status(201).json({
+            course,
             message:"Course created."
         })
     } catch (error) {
