@@ -51,7 +51,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    refetch();
+    refetch(); // fetches profile on each refresh/reload
   }, []);
 
   useEffect(() => {
@@ -67,7 +67,6 @@ const Profile = () => {
   if (isLoading) return <h1>Profile Loading...</h1>;
 
   const user = data && data.user;
-
   console.log(user);
   
 
@@ -110,7 +109,13 @@ const Profile = () => {
             </h1>
           </div>
           <Dialog>
-            <DialogTrigger asChild>
+            <DialogTrigger asChild
+            onClick={()=>{
+              if (user?.name){
+                setName(user.name);
+              }
+            }}
+            >
               <Button size="sm" className="mt-2">
                 Edit Profile
               </Button>

@@ -26,9 +26,10 @@ import { Description } from "@radix-ui/react-dialog";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogoutUserMutation } from "@/features/api/authApi";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const user = !true;
+  const {user} = useSelector(store=> store.auth);
   const [logoutUser, { data, isSuccess }] = useLogoutUserMutation();
   const navigate = useNavigate();
   const logoutHandler = async () => {
@@ -60,7 +61,7 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarImage src={user?.photoUrl || "https://github.com/shadcn.png"} />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
@@ -73,16 +74,21 @@ const Navbar = () => {
                   <Link to={"/profile"}>
                     <DropdownMenuItem>Edit Profile</DropdownMenuItem>
                   </Link>
+                  {user.role !== "instructor" && ( 
+                  <DropdownMenuSeparator/>
+                  )}
                   <DropdownMenuItem onClick={logoutHandler} >Log out</DropdownMenuItem>
+                  {user.role === "instructor" && ( <>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <DropdownMenuItem>Dashboard</DropdownMenuItem></>
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
           ) : (
             <div className="flex items-center gap-2">
-              <Button variant="outline">Login</Button>
-              <Button>Signup</Button>
+              <Button onClick={()=> navigate("/login")} variant="outline">Login</Button>
+              <Button  onClick={()=> navigate("/login")} >Signup</Button>
             </div>
           )}
           <DarkMode />
@@ -100,7 +106,24 @@ const Navbar = () => {
 export default Navbar;
 
 const MobileNavbar = () => {
-  const role = "instructor";
+  const {user} = useSelector(store=> store.auth);
+
+  const [logoutUser, { data, isSuccess }] = useLogoutUserMutation();
+  const navigate = useNavigate();
+  const logoutHandler = async () => {
+    await logoutUser();
+  };
+
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message || "User log out.");
+      navigate("/login");
+    }
+  }, [isSuccess]);
+
+
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -122,13 +145,13 @@ const MobileNavbar = () => {
         </Description>
         <Separator className="mr-2" />
         <nav className="flex flex-col space-y-4">
-          <span>My Learning</span>
-          <span>Edit Profile</span>
-          <span className="flex justify-between">
+        <Link to={"/my-learning"}><span>My Learning</span></Link>
+        <Link to={"/profile"}><span>Edit Profile</span></Link>
+          <span  onClick={logoutHandler}  className="flex justify-between">
             <p>Log out</p> <LogOutIcon />{" "}
           </span>
         </nav>
-        {role === "instructor" && (
+        {user.role === "instructor" && (
           <SheetFooter>
             <SheetClose asChild>
               <Button type="submit">Dashboard</Button>
