@@ -74,9 +74,9 @@ This Learning Management System (LMS) is designed to provide a comprehensive pla
 ## Technology Stack
 -----------------
 
-* **Frontend**: React.js with Redux
+* **Frontend**: React.js with Redux and ShadCN
 * **Backend**: Node.js with Express.js
-* **Database**: MongoDB
+* **Database**: MongoDB, Cloudinary
 * **Authentication**: JWT (JSON Web Tokens)
 
 
@@ -87,4 +87,4 @@ This Learning Management System (LMS) is designed to provide a comprehensive pla
 ### Clone Repository
 
 ```bash
-git clone https://github.com/your-username/lms-mern.git
+git clone https://github.com/sahilxdev/lms.git
